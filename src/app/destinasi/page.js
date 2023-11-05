@@ -1,3 +1,4 @@
+import BottomNavbar from "@/component/BottomNavbar";
 import Navbar from "@/component/Navbar";
 
 export const metadata = {
@@ -8,6 +9,7 @@ export default function Page() {
     return (
         <>
             <Navbar />
+            <BottomNavbar />
         </>
     );
 }

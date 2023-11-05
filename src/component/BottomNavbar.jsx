@@ -1,6 +1,29 @@
 "use client";
 
+/* 
+@DOCS :
+1. core
+    -> package from react / next
+2. third party
+    -> package from third party
+3. global state management {ex.redux}
+    -> redux global state management
+4. components
+    -> reusable component
+5. data
+    -> handle data model or application static data
+6. apis
+    -> api functions
+7. utils
+    -> utility functions
+*/
+
+// core
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+// third party
 import {
     MdHome,
     MdLanguage,
@@ -10,19 +33,28 @@ import {
     MdOutlineQuestionMark,
     MdDiscount,
 } from "react-icons/md";
-import Link from "next/link";
 import clsx from "clsx";
-import { usePathname } from "next/navigation";
+
+// global state management
+// ---
+// components
+// ---
+// data
+// ---
+// apis
+// ---
+// utils
+// ---
 
 const links = [
-    { name: "Tutorial", href: "/tutorial", icon: MdLanguage },
+    { name: "Petunjuk", href: "/petunjuk", icon: MdLanguage },
     {
-        name: "Cancel",
-        href: "/cancel",
+        name: "Batal",
+        href: "/batal",
         icon: MdReplay,
     },
-    { name: "Home", href: "/", icon: MdHome },
-    { name: "Kontak", href: "/contact", icon: MdOutlinePermPhoneMsg },
+    { name: "Beranda", href: "/", icon: MdHome },
+    { name: "Kontak", href: "/kontak", icon: MdOutlinePermPhoneMsg },
     { name: "Lainnya", href: "", icon: MdInfoOutline },
 ];
 
@@ -35,33 +67,31 @@ export default function BottomNavbar() {
     };
 
     return (
-        <section className="md:hidden py-[8px] fixed bottom-0 flex items-center w-full bg-white shadow-low justify-between px-[24px]">
+        <section className='fixed bottom-0 flex w-full items-center justify-between bg-white px-[24px] py-[8px] shadow-low md:hidden'>
             {isLainnyaActive && (
-                <div className="absolute right-[24px] bottom-[94px] flex flex-col items-end gap-[24px] ">
-                    <Link href={"/lainnya/harga-tiket"} className="flex items-center gap-[24px]">
+                <div className='absolute bottom-[94px] right-[24px] flex flex-col items-end gap-[24px] '>
+                    <Link href={"/lainnya/harga-tiket"} className='flex items-center gap-[24px]'>
                         <p
-                            className={clsx("px-3 py-1 text-white bg-blue-500", {
+                            className={clsx("bg-blue-500 px-3 py-1 text-white", {
                                 " bg-red-600": pathname === "/lainnya/harga-tiket",
-                            })}
-                        >
+                            })}>
                             Harga Tiket
                         </p>
                         <MdDiscount
-                            className={clsx("w-[34px] h-[34px] bg-blue-500 rounded-full text-white p-2", {
+                            className={clsx("h-[34px] w-[34px] rounded-full bg-blue-500 p-2 text-white", {
                                 " bg-red-600": pathname === "/lainnya/harga-tiket",
                             })}
                         />
                     </Link>
-                    <Link href={"/lainnya/faq"} className="flex items-center gap-[24px]">
+                    <Link href={"/lainnya/faq"} className='flex items-center gap-[24px]'>
                         <p
-                            className={clsx("px-3 py-1 text-white bg-blue-500", {
+                            className={clsx("bg-blue-500 px-3 py-1 text-white", {
                                 " bg-red-600": pathname === "/lainnya/faq",
-                            })}
-                        >
+                            })}>
                             FAQ
                         </p>
                         <MdOutlineQuestionMark
-                            className={clsx("w-[34px] h-[34px] bg-blue-500 rounded-full text-white p-2", {
+                            className={clsx("h-[34px] w-[34px] rounded-full bg-blue-500 p-2 text-white", {
                                 " bg-red-600": pathname === "/lainnya/faq",
                             })}
                         />
@@ -86,29 +116,27 @@ export default function BottomNavbar() {
                                 },
                                 {
                                     " text-red-600": isLainnyaActive,
-                                }
-                            )}
-                        >
-                            <LinkIcon className="w-[30px] h-[30px] " />
-                            <p className=" md:block text-[12px] ">{link.name}</p>
+                                },
+                            )}>
+                            <LinkIcon className='h-[30px] w-[30px] ' />
+                            <p className=' text-[12px] md:block '>{link.name}</p>
                         </div>
                     );
                 } else {
-                    if (link.name === "Home") {
+                    if (link.name === "Beranda") {
                         return (
-                            <div key={link.name} className="relative px-[18px] ">
+                            <div key={link.name} className='relative px-[18px] '>
                                 <Link
                                     onClick={() => setIsLainnyaActive(false)}
                                     href={link.href}
                                     className={clsx(
-                                        "absolute left-[50%]  translate-x-[-50%]  top-[-60px] flex flex-col justify-end items-center w-[64px] h-[64px]  bg-blue-500 hover:bg-red-600 rounded-full p-[8px]",
+                                        "absolute left-[50%]  top-[-60px]  flex h-[64px] w-[64px] translate-x-[-50%] flex-col items-center justify-end  rounded-full bg-blue-500 p-[12px] hover:bg-red-600",
                                         {
                                             " bg-red-600": pathname === link.href,
-                                        }
-                                    )}
-                                >
-                                    <LinkIcon className="w-[30px] h-[30px] text-white" />
-                                    <p className=" md:block text-[12px] text-white">{link.name}</p>
+                                        },
+                                    )}>
+                                    <LinkIcon className='h-[30px] w-[30px] text-white' />
+                                    <p className=' text-[12px] text-white md:block'>{link.name}</p>
                                 </Link>
                             </div>
                         );
@@ -120,10 +148,9 @@ export default function BottomNavbar() {
                                 href={link.href}
                                 className={clsx("flex flex-col items-center text-blue-500 hover:text-red-600", {
                                     " text-red-600": pathname === link.href,
-                                })}
-                            >
-                                <LinkIcon className="w-[30px] h-[30px]" />
-                                <p className="md:block text-[12px] ">{link.name}</p>
+                                })}>
+                                <LinkIcon className='h-[30px] w-[30px]' />
+                                <p className='text-[12px] md:block '>{link.name}</p>
                             </Link>
                         );
                     }
