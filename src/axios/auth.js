@@ -25,7 +25,7 @@ export const registerApi = async ({ name, email, phone, password }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -53,7 +53,7 @@ export const loginApi = async ({ email, password }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -80,7 +80,7 @@ export const verifyUser = async ({ otp }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -107,7 +107,7 @@ export const resendOtp = async ({ email }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -128,7 +128,7 @@ export const whoAmi = async ({ token }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
