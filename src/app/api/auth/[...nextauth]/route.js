@@ -1,6 +1,5 @@
 import { apiInstance } from "@/axios/instance";
-import NextAuth from "next-auth";
-
+import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const handler = NextAuth({
@@ -9,12 +8,12 @@ const handler = NextAuth({
             name: "Credentials",
             credentials: {
                 email: {
-                    label: "Email",
-                    type: "text",
+                    label: "email",
+                    type: "email",
                     placeholder: "mataringan@gmail.com",
                 },
                 password: {
-                    label: "Password",
+                    label: "password",
                     type: "password",
                 },
             },
@@ -30,13 +29,12 @@ const handler = NextAuth({
                         {
                             headers: {
                                 accept: "*/*",
-                                withCredentials: true,
                                 "Content-Type": "application/json",
                             },
                         },
                     );
 
-                    return res.data.data;
+                    return res.data;
                 } catch (error) {
                     console.log("ERROR USER AUTH", error.response.data.message);
                     throw new Error(error.response.data.message);
@@ -58,7 +56,7 @@ const handler = NextAuth({
         },
     },
     secret: process.env.NEXTAUTH_SECRET,
-    page: {
+    pages: {
         signIn: "/login",
     },
 });
