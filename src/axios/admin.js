@@ -45,6 +45,7 @@ export const createDestination = async ({
     status,
     ticketPrice,
     image,
+    quota,
     token,
 }) => {
     try {
@@ -57,6 +58,7 @@ export const createDestination = async ({
                 openingTime,
                 closingTime,
                 status,
+                quota,
                 ticketPrice,
                 image,
             },
@@ -70,7 +72,7 @@ export const createDestination = async ({
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -81,9 +83,16 @@ export const createDestination = async ({
 @ROUTE: /get-destination
 */
 
-export const getDestination = async () => {
+export const getDestination = async (searchName, searchAddress, searchStatus, searchDate) => {
     try {
-        const response = await apiInstance.get("/destination");
+        const response = await apiInstance.get("/destination", {
+            params: {
+                name: searchName,
+                address: searchAddress,
+                status: searchStatus,
+                openingTime: searchDate,
+            },
+        });
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
