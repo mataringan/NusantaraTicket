@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Login() {
     const router = useRouter();
@@ -15,6 +16,7 @@ export default function Login() {
     const [password, setPassword] = useState("");
 
     const handleLogin = async (e) => {
+        setIsLoading(true);
         e.preventDefault();
 
         signIn("credentials", {
@@ -22,14 +24,15 @@ export default function Login() {
             password: password,
             redirect: false,
         }).then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res.error) {
                 console.log(res.error);
             }
             if (!res.error) {
-                console.log("berhasil login");
                 // const token = session?.data?.user?.token;
                 // console.log(token);
+                setIsLoading(false);
+                router.push("/destinasi");
             }
         });
     };
@@ -84,20 +87,17 @@ export default function Login() {
                                 className={`mt-3 w-full rounded-xl border bg-[#162D3A] p-3 text-white lg:mt-5 ${
                                     isLoading ? "pointer-events-none opacity-70" : ""
                                 }`}>
-                                {isLoading ? "Loading..." : "Sign Up"}
+                                {isLoading ? "Loading..." : "Sign In"}
                             </button>
                         </form>
                     </div>
                     <div className='mt-4 text-center text-[13px] lg:mt-7 '>
-                        {/* <p>
+                        <p>
                             Dont you have an account?
-                            <Link
-                                href="/register"
-                                className="text-blue-700 font-semibold"
-                            >
+                            <Link href='/register' className='ml-2 font-semibold text-blue-700'>
                                 Sign Up
                             </Link>
-                        </p> */}
+                        </p>
                         <p className='mt-4 md:mt-10'>© 2023 BanyuGO</p>
                     </div>
                 </div>
