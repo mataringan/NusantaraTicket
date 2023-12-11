@@ -115,6 +115,54 @@ export const resendOtp = async ({ email }) => {
 };
 
 /*
+@ROUTE: /forgot-password
+*/
+
+export const forgotPassword = async ({ email }) => {
+    try {
+        const response = await apiInstance.post("/forgot-password", {
+            email,
+        });
+
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
+
+/*
+@ROUTE: /reset-password
+*/
+
+export const resetPassword = async ({ password, confirmPassword, token }) => {
+    try {
+        const response = await apiInstance.put(
+            "/reset-password",
+            {
+                password,
+                confirmPassword,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
+
+/*
 @ROUTE: /whoami
 */
 

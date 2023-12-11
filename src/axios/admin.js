@@ -1,18 +1,19 @@
 import { apiInstance } from "./instance";
-import { AxiosError } from "axios";
+import { Axios, AxiosError } from "axios";
 
 /*
-@ROUTE: /register-admin
+@ROUTE: /register-user
 */
 
-export const registerAdmin = async ({ name, email, phone, password, token }) => {
+export const registerUser = async ({ name, email, phone, password, role, token }) => {
     try {
         const response = await apiInstance.post(
-            "/register-admin",
+            "/register-user",
             {
                 name,
                 email,
                 phone,
+                role,
                 password,
             },
             {
@@ -25,7 +26,105 @@ export const registerAdmin = async ({ name, email, phone, password, token }) => 
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
+
+/*
+@ROUTE: /get-all-user
+*/
+
+export const getUser = async ({ searchName, searchRole, token }) => {
+    try {
+        const response = await apiInstance.get("/user", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            params: {
+                name: searchName,
+                role: searchRole,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
+
+/*
+@ROUTE: /get-user-id
+*/
+
+export const getUserById = async ({ _id, token }) => {
+    try {
+        const response = await apiInstance.get(`/user/${_id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
+
+/*
+@ROUTE: /update-user-id
+*/
+
+export const updateUserById = async ({ _id, name, email, phone, role, token }) => {
+    try {
+        const response = await apiInstance.put(
+            `/user/${_id}`,
+            {
+                name,
+                email,
+                phone,
+                role,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
+
+/*
+@ROUTE: /delete-user
+*/
+
+export const deleteUser = async ({ _id, token }) => {
+    try {
+        const response = await apiInstance.delete(`/user/${_id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -43,6 +142,7 @@ export const createDestination = async ({
     openingTime,
     closingTime,
     status,
+    date,
     ticketPrice,
     image,
     quota,
@@ -58,6 +158,7 @@ export const createDestination = async ({
                 openingTime,
                 closingTime,
                 status,
+                date,
                 quota,
                 ticketPrice,
                 image,
@@ -90,13 +191,13 @@ export const getDestination = async (searchName, searchAddress, searchStatus, se
                 name: searchName,
                 address: searchAddress,
                 status: searchStatus,
-                openingTime: searchDate,
+                date: searchDate,
             },
         });
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -121,6 +222,27 @@ export const getDestinationById = async ({ _id }) => {
 };
 
 /*
+@ROUTE: /get-destination-admin
+*/
+
+export const getDestinationByAdmin = async ({ token }) => {
+    try {
+        const response = await apiInstance.get("/destination-admin", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
+
+/*
 @ROUTE: /update-destination
 */
 
@@ -129,6 +251,7 @@ export const updateDestination = async ({
     name,
     address,
     description,
+    date,
     openingTime,
     closingTime,
     status,
@@ -143,6 +266,7 @@ export const updateDestination = async ({
                 name,
                 address,
                 description,
+                date,
                 openingTime,
                 closingTime,
                 status,
@@ -159,7 +283,7 @@ export const updateDestination = async ({
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -180,7 +304,7 @@ export const deleteDestination = async ({ _id, token }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -211,7 +335,7 @@ export const createInformation = async ({ idDestination, title, description, dat
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -228,13 +352,33 @@ export const getAllInformationDestination = async () => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
     }
 };
 
+/*
+@ROUTE: /information-destination-admin
+*/
+
+export const getInformationDestinationAdmin = async ({ token }) => {
+    try {
+        const response = await apiInstance.get("/information-destination-admin", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
 /*
 @ROUTE: /get-information-destination-id
 */
@@ -245,7 +389,7 @@ export const getInformationById = async ({ _id }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -276,7 +420,7 @@ export const updateInformationDestination = async ({ _id, idDestination, title, 
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -297,7 +441,7 @@ export const deleteInformationDestination = async ({ _id, token }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -331,7 +475,7 @@ export const createBooking = async ({ idDestination, citizenship, name, phone, i
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -352,7 +496,7 @@ export const getAllTransaction = async ({ token }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -373,7 +517,35 @@ export const getTransactionById = async ({ _id, token }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
+
+/*
+@ROUTE: /get-transaction-admin
+ */
+
+export const getTransactionAdmin = async ({ token, searchName, searchDate, searchStatus }) => {
+    try {
+        const response = await apiInstance.get("/transaction-admin", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            params: {
+                name: searchName,
+                date: searchDate,
+                status: searchStatus,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            // console.log(errorMsg);
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -400,7 +572,7 @@ export const updateStatusTransaction = async ({ _id, token }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -411,14 +583,15 @@ export const updateStatusTransaction = async ({ _id, token }) => {
 @ROUTE: /update-transaction
  */
 
-export const updateTransaction = async ({ _id, idDestination, name, phone, quantity, email, status, token }) => {
+export const updateTransaction = async ({ _id, name, phone, citizenship, date, quantity, email, status, token }) => {
     try {
         const response = await apiInstance.put(
             `/transaction/${_id}`,
             {
-                idDestination,
                 name,
                 phone,
+                date,
+                citizenship,
                 quantity,
                 email,
                 status,
@@ -433,7 +606,7 @@ export const updateTransaction = async ({ _id, idDestination, name, phone, quant
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);
@@ -454,7 +627,7 @@ export const deleteTransaction = async ({ _id, token }) => {
         return response.data;
     } catch (error) {
         if (error instanceof AxiosError) {
-            const errorMsg = error?.response?.message;
+            const errorMsg = error?.response?.data?.message;
             throw new Error(errorMsg);
         }
         throw new Error(error.message);

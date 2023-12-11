@@ -13,7 +13,7 @@ import { useDebounce } from "use-debounce";
 //     title: "Destinasi",
 // };
 
-export default function Page() {
+export default function DestinationInfo() {
     const session = useSession();
     const router = useRouter();
     const token = session?.data?.user?.token;
@@ -28,26 +28,26 @@ export default function Page() {
     const [debouncedSearchName] = useDebounce(searchName, 200);
     const [debouncedSearchAddress] = useDebounce(searchAddress, 200);
     const [debouncedSearchDate] = useDebounce(searchDate, 200);
-    const [debouncedStatus] = useDebounce(searchStatus, 200);
+    const [debouncedSearchStatus] = useDebounce(searchStatus, 200);
 
     useEffect(() => {
-        getAllDestination(debouncedSearchName, debouncedSearchAddress, debouncedStatus, debouncedSearchDate);
-    }, [debouncedSearchName, debouncedSearchAddress, debouncedStatus, debouncedSearchDate]);
+        getAllDestination(debouncedSearchName, debouncedSearchAddress, debouncedSearchStatus, debouncedSearchDate);
+    }, [debouncedSearchName, debouncedSearchAddress, debouncedSearchStatus, debouncedSearchDate]);
 
     const getAllDestination = async (searchName, searchAddress, searchStatus, searchDate) => {
         await getDestination(searchName, searchAddress, searchStatus, searchDate).then((res) => {
             setDestination(res.data);
-            console.log(res);
+            // console.log(res);
         });
     };
 
-    const handleBooking = () => {
+    const handleBooking = (_id) => {
         try {
             if (!token) {
                 alert("anda belum login");
                 router.push("/login");
             } else {
-                router.push("/destinasi/booking");
+                router.push(`/destinasi/${_id}`);
             }
         } catch (error) {
             console.error(error);
@@ -99,7 +99,11 @@ export default function Page() {
                     </select>
                 </div> */}
             </div>
-            {destination.length ? destination.map((item) => <DestinationCard key={item._id} item={item} />) : <p>Loading....</p>}
+            {destination.length ? (
+                destination.map((item) => <DestinationCard key={item._id} item={item} handleBooking={handleBooking} />)
+            ) : (
+                <p>Loading....</p>
+            )}
 
             <button className='mt-96 w-20 bg-blue-500' onClick={() => signOut()}>
                 Sign Out

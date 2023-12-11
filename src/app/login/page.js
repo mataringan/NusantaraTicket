@@ -1,20 +1,27 @@
 "use client";
 
-import { registerApi } from "@/axios/auth";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import Image from "next/image";
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { userAction } from "@/store/user-slice";
 
 export default function Login() {
     const router = useRouter();
     const session = useSession();
+    const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     const handleLogin = async (e) => {
         setIsLoading(true);
         e.preventDefault();
@@ -26,8 +33,16 @@ export default function Login() {
         }).then((res) => {
             // console.log(res);
             if (res.error) {
-                console.log(res.error);
+                if (res.error === "user not verified") {
+                    dispatch(userAction.addToEmail(email));
+                    alert("user belum diverifikasi");
+                    router.push("/verify-user");
+                } else {
+                    alert(res.error);
+                }
+                setIsLoading(false);
             }
+
             if (!res.error) {
                 // const token = session?.data?.user?.token;
                 // console.log(token);
@@ -69,18 +84,24 @@ export default function Login() {
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
-                            <div className='my-4 flex flex-col'>
+                            <div className='relative my-4 flex flex-col'>
                                 <label htmlFor='password' className='mb-2'>
                                     Password
                                     <span className='text-red-600'>*</span>
                                 </label>
                                 <input
-                                    type='password'
+                                    type={showPassword ? "text" : "password"}
                                     id='password'
                                     placeholder='Enter your password.'
                                     className='rounded-lg border bg-[#F7FBFF] p-2'
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
+                                <button
+                                    type='button'
+                                    className='absolute right-4 top-11 cursor-pointer'
+                                    onClick={togglePasswordVisibility}>
+                                    {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                                </button>
                             </div>
                             <button
                                 type='submit'
@@ -90,6 +111,9 @@ export default function Login() {
                                 {isLoading ? "Loading..." : "Sign In"}
                             </button>
                         </form>
+                    </div>
+                    <div className='mt-2 text-right text-[13px] font-semibold text-blue-700 lg:mt-7'>
+                        <Link href='/forgot-password'>Forgot Password?</Link>
                     </div>
                     <div className='mt-4 text-center text-[13px] lg:mt-7 '>
                         <p>

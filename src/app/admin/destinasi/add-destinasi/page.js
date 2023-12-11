@@ -12,6 +12,7 @@ const CreateDestination = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [name, setName] = useState();
     const [address, setAddress] = useState();
+    const [date, setDate] = useState();
     const [openingTime, setOpeningTime] = useState();
     const [closingTime, setClosingTime] = useState();
     const [status, setStatus] = useState();
@@ -26,7 +27,10 @@ const CreateDestination = () => {
         setStatus(e.target.value);
     };
 
-    console.log(openingTime);
+    // console.log(token);
+
+    // console.log(date);
+    // console.log(openingTime);
 
     const handleCreateDestination = async (e) => {
         try {
@@ -38,6 +42,7 @@ const CreateDestination = () => {
                 openingTime,
                 closingTime,
                 status,
+                date,
                 ticketPrice,
                 quota,
                 description,
@@ -45,8 +50,9 @@ const CreateDestination = () => {
                 token,
             }).then((res) => {
                 setIsLoading(false);
-                console.log(res);
-                router.push("/destinasi");
+                alert("tambah destinasi berhasil");
+                // console.log(res);
+                router.push("/admin/destinasi");
             });
         } catch (error) {
             console.error(error);
@@ -83,11 +89,23 @@ const CreateDestination = () => {
                         />
                     </div>
                     <div className='mb-4'>
+                        <label htmlFor='date' className='mb-2 block text-sm font-bold text-gray-700'>
+                            Date:
+                        </label>
+                        <input
+                            type='date'
+                            id='date'
+                            name='date'
+                            className='focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none'
+                            onChange={(e) => setDate(e.target.value)}
+                        />
+                    </div>
+                    <div className='mb-4'>
                         <label htmlFor='openingTime' className='mb-2 block text-sm font-bold text-gray-700'>
                             Opening Time:
                         </label>
                         <input
-                            type='datetime-local'
+                            type='time'
                             id='openingTime'
                             name='openingTime'
                             className='focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none'
@@ -99,7 +117,7 @@ const CreateDestination = () => {
                             Closing Time:
                         </label>
                         <input
-                            type='datetime-local'
+                            type='time'
                             id='closingTime'
                             name='closingTime'
                             className='focus:shadow-outline w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none'
