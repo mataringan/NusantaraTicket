@@ -57,7 +57,7 @@ export default function Navbar() {
     };
 
     return (
-        <section className='fixed top-0 flex h-[60px] w-full items-center justify-center bg-[#0a4773] py-3 text-white'>
+        <section className='fixed top-0 z-10 flex h-[60px] w-full items-center justify-center bg-[#0a4773] py-3 text-white'>
             {/* mobile navbar */}
             <h1 className='text-[18px] font-bold md:hidden'>Logo | Navbar Mobile</h1>
             {/* mobile navbar */}

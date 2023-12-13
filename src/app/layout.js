@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProviders } from "@/component/SessionProviders";
 import { Providers } from "@/component/Providers";
+import Footer from "@/component/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +19,10 @@ export default function RootLayout({ children }) {
         <html lang='en'>
             <body className={inter.className} suppressHydrationWarning={true}>
                 <SessionProviders>
-                    <Providers>{children}</Providers>
+                    <Providers>
+                        {children}
+                        <Footer />
+                    </Providers>
                 </SessionProviders>
             </body>
         </html>
