@@ -121,7 +121,7 @@ export default function ResetPassword() {
                         </form>
                     </div>
                     <div className='mt-4 text-center text-[13px] lg:mt-7 '>
-                        <p className='mt-10'>© 2023 BanyuGO</p>
+                        <p className='mt-10'>© 2024 BanyuGO</p>
                     </div>
                 </div>
             </div>

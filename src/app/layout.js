@@ -8,10 +8,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
     title: {
-        template: "%s | Banyu-Go",
-        default: "Banyu-Go",
+        template: "%s | Nusantara Ticket",
+        default: "Nusantara Ticket",
     },
-    description: "Aplikasi yang dibuat untuk membeli tiket wisata di banyumas.",
+    description: "Aplikasi yang dibuat untuk membeli tiket wisata di Indonesia.",
 };
 
 export default function RootLayout({ children }) {

@@ -2,7 +2,7 @@
 
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
@@ -18,6 +18,8 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+
+    const role = session?.data?.user?.role;
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -44,14 +46,21 @@ export default function Login() {
             }
 
             if (!res.error) {
-                // const token = session?.data?.user?.token;
-                // console.log(token);
                 setIsLoading(false);
-                router.push("/destinasi");
             }
         });
     };
 
+    useEffect(() => {
+        if (role) {
+            if (role === "admin" || role === "super admin") {
+                router.push("/admin/destinasi");
+            }
+            if (role === "user") {
+                router.push("/destinasi");
+            }
+        }
+    }, [role]);
     return (
         <div className='lg:flex lg:h-screen  lg:overflow-y-hidden '>
             <div className='order-2 flex  h-[35%] justify-center lg:h-screen lg:w-[50%]  lg:items-center'>
@@ -122,7 +131,7 @@ export default function Login() {
                                 Sign Up
                             </Link>
                         </p>
-                        <p className='mt-4 md:mt-10'>© 2023 BanyuGO</p>
+                        <p className='mt-4 md:mt-10'>© 2024 BanyuGO</p>
                     </div>
                 </div>
             </div>

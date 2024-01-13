@@ -10,6 +10,7 @@ export default function DestinasiAdmin() {
     const token = session?.data?.user?.token;
 
     const [destinations, setDestinations] = useState([]);
+    console.log(destinations);
 
     useEffect(() => {
         if (token) {

@@ -4,9 +4,9 @@ import Image from "next/image";
 
 export default function CardCategories({ categories, ...props }) {
     return (
-        <div className='group flex flex-col md:gap-y-6 gap-y-3 overflow-hidden rounded-lg border border-slate-400 pb-5 hover:border-slate-700 md:w-[200px] xl:h-fit xl:w-fit'>
+        <div className='group flex flex-col gap-y-3 overflow-hidden rounded-lg border border-slate-400 pb-5 hover:border-slate-700 md:w-[200px]  md:gap-y-6 xl:h-fit xl:w-fit'>
             {/* image start */}
-            <div className='transition group-hover:shadow-inner2'>
+            <div className='transition hover:scale-150 group-hover:shadow-inner2'>
                 <div className='relative -z-10 h-[200px] w-full xl:h-[340px] xl:w-[340px]'>
                     <Image {...props} layout='fill' objectFit='cover' alt={categories} />
                 </div>

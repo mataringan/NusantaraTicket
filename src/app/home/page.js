@@ -23,7 +23,7 @@ export default function Home() {
             <section className='flex flex-col gap-y-6 bg-welcome px-5 pb-14 pt-[120px] md:flex-row md:items-center md:justify-between md:gap-y-0 xl:justify-center'>
                 {/* left start */}
                 <div className='flex w-full flex-col gap-y-4 text-white md:w-[50%]'>
-                    <h1 className='text-[27px] font-bold md:text-[30px] xl:text-[50px]'>Welcome to Banyu Go</h1>
+                    <h1 className='text-[27px] font-bold md:text-[30px] xl:text-[50px]'>Welcome to Nusantara Ticket</h1>
                     <p className='md:text-[14px] xl:text-[16px]'>Purchase tickets for your favorite tourist attractions</p>
                     <div className='flex w-full flex-col gap-y-3'>
                         <input

@@ -1,7 +1,10 @@
 import { formatTime } from "@/utils/formatDateTime";
+import { Map } from "@/utils/map";
 import Link from "next/link";
 
 const DestinationCard = ({ item, handleDelete }) => {
+    // console.log(iframesrc);
+    // const map = Map(item.map);
     return (
         <div className='mx-auto my-10 max-w-md overflow-hidden rounded-xl bg-white shadow-md transition duration-300 hover:shadow-lg'>
             <img className='h-48 w-full object-cover' src={item.image} alt={item.name} />
@@ -28,6 +31,7 @@ const DestinationCard = ({ item, handleDelete }) => {
                 }}>
                 Delete
             </button>
+            {/* <iframe src={map} frameborder='0'></iframe> */}
         </div>
     );
 };

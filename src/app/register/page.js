@@ -156,16 +156,7 @@ export default function Register() {
                         </form>
                     </div>
                     <div className='mt-4 text-center text-[13px] lg:mt-7 '>
-                        {/* <p>
-                            Dont you have an account?
-                            <Link
-                                href="/register"
-                                className="text-blue-700 font-semibold"
-                            >
-                                Sign Up
-                            </Link>
-                        </p> */}
-                        <p className='mt-4 md:mt-10'>© 2023 BanyuGO</p>
+                        <p className='mt-4 md:mt-10'>© 2023 Nusantara Ticket</p>
                     </div>
                 </div>
             </div>

@@ -43,8 +43,8 @@ const links = [
     { name: "Kontak", href: "/kontak" },
     { name: "Petunjuk", href: "/petunjuk" },
     {
-        name: "Batal",
-        href: "/batal",
+        name: "Login",
+        href: "/login",
     },
 ];
 
