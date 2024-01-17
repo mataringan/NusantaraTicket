@@ -156,7 +156,7 @@ export default function Register() {
                         </form>
                     </div>
                     <div className='mt-4 text-center text-[13px] lg:mt-7 '>
-                        <p className='mt-4 md:mt-10'>© 2023 Nusantara Ticket</p>
+                        <p className='mt-4 md:mt-10'>© 2023 NusaGO</p>
                     </div>
                 </div>
             </div>

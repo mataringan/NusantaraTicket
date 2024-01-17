@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
     title: {
-        template: "%s | Nusantara Ticket",
-        default: "Nusantara Ticket",
+        template: "%s | NusaGO",
+        default: "NusaGO",
     },
     description: "Aplikasi yang dibuat untuk membeli tiket wisata di Indonesia.",
 };
