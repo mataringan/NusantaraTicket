@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Navbar from "@/component/Navbar";
 import BottomNavbar from "@/component/BottomNavbar";
+import DestinationInfo from "./destinastionInfo";
 
 export default function DetailDestination() {
     const { id } = useParams();
