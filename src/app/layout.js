@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
                 <SessionProviders>
                     <Providers>
                         {children}
-                        <Footer />
+                        {/* <Footer /> */}
                     </Providers>
                 </SessionProviders>
             </body>

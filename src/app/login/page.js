@@ -131,7 +131,7 @@ export default function Login() {
                                 Sign Up
                             </Link>
                         </p>
-                        <p className='mt-4 md:mt-10'>© 2024 BanyuGO</p>
+                        <p className='mt-4 md:mt-10'>© 2024 Nusantara Ticket</p>
                     </div>
                 </div>
             </div>

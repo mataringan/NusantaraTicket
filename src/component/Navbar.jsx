@@ -25,6 +25,7 @@ import { usePathname } from "next/navigation";
 
 // third party
 import clsx from "clsx";
+import { signOut, useSession } from "next-auth/react";
 
 // global state management
 // ---
@@ -42,15 +43,14 @@ const links = [
     { name: "Lainnya", href: "" },
     { name: "Kontak", href: "/kontak" },
     { name: "Petunjuk", href: "/petunjuk" },
-    {
-        name: "Login",
-        href: "/login",
-    },
 ];
 
 export default function Navbar() {
+    const session = useSession();
     const pathname = usePathname();
     const [isLainnyaActive, setIsLainnyaActive] = useState(false);
+
+    const token = session?.data?.user?.token;
 
     const handleLainnya = () => {
         setIsLainnyaActive((prevState) => !prevState);
@@ -104,15 +104,18 @@ export default function Navbar() {
                         }
 
                         return (
-                            <Link
-                                onClick={() => setIsLainnyaActive(false)}
-                                href={link.href}
-                                key={link.name}
-                                className={clsx("md:font-medium", { " md:text-[#f1c40f]": pathname === link.href })}>
-                                <p>{link.name}</p>
-                            </Link>
+                            <div key={link.name}>
+                                <Link
+                                    onClick={() => setIsLainnyaActive(false)}
+                                    href={link.href}
+                                    key={link.name}
+                                    className={clsx("md:font-medium", { " md:text-[#f1c40f]": pathname === link.href })}>
+                                    <p>{link.name}</p>
+                                </Link>
+                            </div>
                         );
                     })}
+                    {token ? <button onClick={() => signOut()}>Logout</button> : <Link href={"/login"}>Login</Link>}
                 </div>
             </div>
             {/* md and higher navbar */}

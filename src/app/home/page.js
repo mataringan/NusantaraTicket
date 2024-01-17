@@ -1,26 +1,44 @@
+"use client";
+
 import BottomNavbar from "@/component/BottomNavbar";
 import Navbar from "@/component/Navbar";
-import jepang from "@/../public/image/jepang.jpg";
+import perkotaan from "@/../public/image/perkotaan.jpg";
 import hill from "@/../public/image/hill.jpg";
 import pantai from "@/../public/image/beach.jpg";
 import villa from "@/../public/image/villa.jpg";
 import pedesaan from "@/../public/image/village.jpg";
 import airTerjun from "@/../public/image/waterfall.jpg";
+import papua from "@/../public/image/papua.jpg";
+import papuaGunung from "@/../public/image/papuapegunungan.jpg";
+import sulawesi from "@/../public/image/sulawesi.jpg";
+import bali from "@/../public/image/bali.jpg";
+
 import awan from "@/../public/image/awan.jpg";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CardHome from "@/component/CardHome";
 import CardCategories from "@/component/CardCategories";
 import Form from "@/component/Form";
 import ButtonHome from "@/component/ButtonHome";
 import Image from "next/image";
 import bgWelcome from "@/../public/image/bg-welcome.svg";
+import { getDestination } from "@/axios/admin";
+import Footer from "@/component/Footer";
 
 export default function Home() {
+    // const [destinations, setDestinations] = useState([]);
+    // useEffect(() => {
+    //     getDestination().then((res) => {
+    //         // console.log(res.data);
+    //         setDestinations(res.data);
+    //     });
+    // }, []);
+
+    // console.log(destinations);
     return (
         <div className='bg-[#DDF2FD '>
             <Navbar />
             {/* welcome start */}
-            <section className='flex flex-col gap-y-6 bg-welcome px-5 pb-14 pt-[120px] md:flex-row md:items-center md:justify-between md:gap-y-0 xl:justify-center'>
+            <section className='flex flex-col gap-y-6 bg-welcome bg-no-repeat px-5 pb-14 pt-[120px] md:flex-row md:items-center md:justify-between md:gap-y-0 xl:justify-center'>
                 {/* left start */}
                 <div className='flex w-full flex-col gap-y-4 text-white md:w-[50%]'>
                     <h1 className='text-[27px] font-bold md:text-[30px] xl:text-[50px]'>Welcome to Nusantara Ticket</h1>
@@ -28,19 +46,21 @@ export default function Home() {
                     <div className='flex w-full flex-col gap-y-3'>
                         <input
                             type='text'
-                            placeholder='Search for tickets'
+                            placeholder='Search for destination'
                             className='box-border w-full rounded-md p-3 text-black outline-none md:w-[80%] md:text-[14px] xl:w-[60%] xl:text-[16px]'
                         />
                         <div className='flex gap-x-4'>
-                            <ButtonHome>Explore</ButtonHome>
                             <ButtonHome>Search</ButtonHome>
+                            <ButtonHome>Explore</ButtonHome>
                         </div>
                     </div>
                 </div>
                 {/* left end  */}
                 {/* right start  */}
                 <div>
-                    <div className='h-[200px] w-full bg-slate-400 md:h-[210px] md:w-[360px] xl:h-[400px] xl:w-[520px]'></div>
+                    <div className='h-[200px] w-full  md:h-[210px] md:w-[360px] xl:h-[400px] xl:w-[520px]'>
+                        <Image src={papuaGunung} alt='' className='h-full w-full rounded-md' />
+                    </div>
                 </div>
                 {/* right end  */}
             </section>
@@ -50,9 +70,12 @@ export default function Home() {
             <section className='flex flex-col gap-y-9 px-5 pb-14 pt-28 text-black xl:px-14'>
                 <h1 className='text-center text-[27px] font-bold md:text-[30px] xl:text-[32px] '>Recommendation Destination</h1>
                 <div className='flex flex-col items-center justify-center gap-y-8 md:flex-row md:flex-wrap md:gap-x-6 md:gap-y-0 xl:gap-x-9'>
-                    <CardHome text={"Tokyo"} src={jepang} />
-                    <CardHome text={"Hill"} src={hill} />
-                    <CardHome text={"Awan"} src={awan} />
+                    {/* {destinations
+                        ? destinations.map((item) => <CardHome key={item.name} text={item.name} src={item.image} />)
+                        : "Loading..."} */}
+                    <CardHome text={"Papua"} src={papua} />
+                    <CardHome text={"Sulawesi"} src={sulawesi} />
+                    <CardHome text={"Bali"} src={bali} />
                 </div>
             </section>
             {/* recommendation end  */}
@@ -64,7 +87,7 @@ export default function Home() {
                 </div>
                 {/* container card start */}
                 <div className='flex w-full flex-col gap-y-9 md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-x-6 md:gap-y-12 xl:gap-x-9'>
-                    <CardCategories src={jepang} categories={"Perkotaan"} />
+                    <CardCategories src={perkotaan} categories={"Perkotaan"} />
                     <CardCategories src={pedesaan} categories={"Pedesaan"} />
                     <CardCategories src={villa} categories={"Villa"} />
                     <CardCategories src={hill} categories={"Pegunungan"} />
@@ -99,6 +122,7 @@ export default function Home() {
             </section>
             {/* footer end  */}
             <BottomNavbar />
+            <Footer />
         </div>
     );
 }

@@ -1,43 +1,67 @@
 "use client";
 
-import { getDestination } from "@/axios/admin";
+import { getDestination, getDestinationByCategory } from "@/axios/admin";
 import BottomNavbar from "@/component/BottomNavbar";
 import Navbar from "@/component/Navbar";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import DestinationCard from "./destinationCard";
+import { useDispatch, useSelector } from "react-redux";
 import { useDebounce } from "use-debounce";
+import axios from "axios";
 
 // export const metadata = {
 //     title: "Destinasi",
 // };
 
-export default function DestinationInfo() {
+export default function Destination() {
     const session = useSession();
     const router = useRouter();
     const token = session?.data?.user?.token;
 
+    const category = useSelector((state) => state.destination.category);
     const [destination, setDestination] = useState([]);
 
-    const [searchName, setSearchName] = useState("");
-    const [searchAddress, setSearchAddress] = useState("");
-    const [searchDate, setSearchDate] = useState("");
-    const [searchStatus, setSearchStatus] = useState("");
+    // const [searchName, setSearchName] = useState("");
+    // const [searchAddress, setSearchAddress] = useState("");
+    // const [searchDate, setSearchDate] = useState("");
+    // const [searchStatus, setSearchStatus] = useState("");
+    // const searchCategory = category;
 
-    const [debouncedSearchName] = useDebounce(searchName, 200);
-    const [debouncedSearchAddress] = useDebounce(searchAddress, 200);
-    const [debouncedSearchDate] = useDebounce(searchDate, 200);
-    const [debouncedSearchStatus] = useDebounce(searchStatus, 200);
+    // const [debouncedSearchName] = useDebounce(searchName, 200);
+    // const [debouncedSearchAddress] = useDebounce(searchAddress, 200);
+    // const [debouncedSearchDate] = useDebounce(searchDate, 200);
+    // const [debouncedSearchStatus] = useDebounce(searchStatus, 200);
+    // const [debouncedSearchCategory] = useDebounce(category, 200);
+
+    // console.log(category);
+
+    // useEffect(() => {
+    //     getAllDestination(
+    //         debouncedSearchName,
+    //         debouncedSearchAddress,
+    //         debouncedSearchStatus,
+    //         debouncedSearchDate,
+    //         debouncedSearchCategory,
+    //     );
+    // }, [debouncedSearchName, debouncedSearchAddress, debouncedSearchStatus, debouncedSearchDate, debouncedSearchCategory]);
+
+    // const getAllDestination = async (searchName, searchAddress, searchStatus, searchDate, searchCategory) => {
+    //     await getDestination(searchName, searchAddress, searchStatus, searchDate, searchCategory).then((res) => {
+    //         setDestination(res.data);
+    //         // console.log(res);
+    //     });
+    // };
 
     useEffect(() => {
-        getAllDestination(debouncedSearchName, debouncedSearchAddress, debouncedSearchStatus, debouncedSearchDate);
-    }, [debouncedSearchName, debouncedSearchAddress, debouncedSearchStatus, debouncedSearchDate]);
+        getCategoryDestination();
+    }, []);
 
-    const getAllDestination = async (searchName, searchAddress, searchStatus, searchDate) => {
-        await getDestination(searchName, searchAddress, searchStatus, searchDate).then((res) => {
-            setDestination(res.data);
+    const getCategoryDestination = async () => {
+        await getDestinationByCategory({ category }).then((res) => {
             // console.log(res);
+            setDestination(res.data);
         });
     };
 
@@ -57,7 +81,6 @@ export default function DestinationInfo() {
     return (
         <>
             <Navbar />
-            <BottomNavbar />
             <div className='flex'>
                 <div className=''>
                     <label htmlFor=''>Name: </label>
@@ -99,15 +122,14 @@ export default function DestinationInfo() {
                     </select>
                 </div> */}
             </div>
-            {destination.length ? (
-                destination.map((item) => <DestinationCard key={item._id} item={item} handleBooking={handleBooking} />)
-            ) : (
-                <p>Loading....</p>
-            )}
+            {destination.length > 0
+                ? destination.map((item) => <DestinationCard key={item._id} item={item} handleBooking={handleBooking} />)
+                : destination.length === 0 && <p>No data available.</p>}
 
-            <button className='mt-96 w-20 bg-blue-500' onClick={() => signOut()}>
+            {/* <button className='mt-96 w-20 bg-blue-500' onClick={() => signOut()}>
                 Sign Out
-            </button>
+            </button> */}
+            <BottomNavbar />
         </>
     );
 }

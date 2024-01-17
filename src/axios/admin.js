@@ -184,7 +184,7 @@ export const createDestination = async ({
 @ROUTE: /get-destination
 */
 
-export const getDestination = async (searchName, searchAddress, searchStatus, searchDate) => {
+export const getDestination = async (searchName, searchAddress, searchStatus, searchDate, searchCategory) => {
     try {
         const response = await apiInstance.get("/destination", {
             params: {
@@ -192,6 +192,7 @@ export const getDestination = async (searchName, searchAddress, searchStatus, se
                 address: searchAddress,
                 status: searchStatus,
                 date: searchDate,
+                category: searchCategory,
             },
         });
         return response.data;
@@ -204,6 +205,22 @@ export const getDestination = async (searchName, searchAddress, searchStatus, se
     }
 };
 
+/*
+@ROUTE: /get-destination-category
+*/
+
+export const getDestinationByCategory = async ({ category }) => {
+    try {
+        const response = await apiInstance.get(`/destination?category=${category}`);
+        return response.data;
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMsg = error?.response?.data?.message;
+            throw new Error(errorMsg);
+        }
+        throw new Error(error.message);
+    }
+};
 /*
 @ROUTE: /get-destination-id
 */
