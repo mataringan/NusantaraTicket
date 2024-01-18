@@ -63,7 +63,7 @@ export default function ForgotPassword() {
                             </button>
                         </form>
                         <div className='mt-4 text-center text-[13px] lg:mt-7 '>
-                            <p className='mt-10'>© 2023 Nusantara Ticket</p>
+                            <p className='mt-10'>© 2023 nusaGO</p>
                         </div>
                     </div>
                 </div>

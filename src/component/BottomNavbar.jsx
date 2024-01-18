@@ -33,6 +33,7 @@ import {
     MdOutlineQuestionMark,
     MdDiscount,
 } from "react-icons/md";
+import { IoMdLogIn } from "react-icons/io";
 import clsx from "clsx";
 
 // global state management
@@ -49,9 +50,9 @@ import clsx from "clsx";
 const links = [
     { name: "Petunjuk", href: "/petunjuk", icon: MdLanguage },
     {
-        name: "Batal",
-        href: "/batal",
-        icon: MdReplay,
+        name: "Login",
+        href: "/login",
+        icon: IoMdLogIn,
     },
     { name: "Beranda", href: "/", icon: MdHome },
     { name: "Kontak", href: "/kontak", icon: MdOutlinePermPhoneMsg },
